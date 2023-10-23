@@ -231,7 +231,7 @@ def get_generation_config(load: str, tokenizer, is_decode_eos_token: bool, max_n
                 num_beams=1,
                 pad_token_id=tokenizer.pad_token_id,
                 eos_token_id=tokenizer.encode('\n\n').append(tokenizer.eos_token_id),
-                begin_suppress_tokens=[tokenizer.eos_token_id],
+                begin_suppress_tokens=tokenizer.all_special_ids,
             )
         else:
             gen_config = GenerationConfig(

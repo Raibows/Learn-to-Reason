@@ -261,9 +261,6 @@ def cleanup(pred, dataset='gsm8k') -> Tuple[str, str]:
 
     return pred, final_pred.lower()
 
-def vote(after_cleanup_res_list):
-    assert False
-    return max(set(after_cleanup_res_list), key=after_cleanup_res_list.count)
 
 def score(pred: List, final_ans: List):
     assert(len(pred) == len(final_ans))
@@ -276,5 +273,4 @@ def template_split_get_only_generate(outs, template_id):
 
 
 if __name__ == '__main__':
-    print(tools_get_time())
-    print(tools_get_time())
+    pass

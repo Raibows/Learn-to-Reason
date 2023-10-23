@@ -6,8 +6,7 @@ import glob
 import torch.distributed as dist
 from torch.utils.data import DataLoader, Dataset, DistributedSampler
 from torch import nn
-from transformers import Seq2SeqTrainer, TrainerCallback, Seq2SeqTrainingArguments, TrainerState, TrainerControl, \
-    AutoTokenizer
+from transformers import Seq2SeqTrainer, TrainerCallback, Seq2SeqTrainingArguments, TrainerState, TrainerControl, AutoTokenizer
 from typing import Dict, Optional, List, Union, Any
 from datetime import timedelta
 from deepspeed.runtime.engine import DeepSpeedEngine
@@ -394,10 +393,11 @@ class CustomTrainer(Seq2SeqTrainer):
                 'skipped_steps': self.deepspeed.skipped_steps,
                 'loss_scale': cur_scale,
             }
-            if cur_scale < 4.0:
+            # fp16 instability patch
+            if self.myargs.fp16 and cur_scale < 4.0:
                 self.deepspeed.optimizer.loss_scaler.cur_scale *= 2
                 if self.state.is_local_process_zero:
-                    self.logger.warning(f"To avoid exception, manually reset loss scale from {cur_scale} to {self.deepspeed.optimizer.loss_scaler.cur_scale}")
+                    self.logger.warning(f"fp16 mode, to avoid exception, manually reset loss scale from {cur_scale} to {self.deepspeed.optimizer.loss_scaler.cur_scale}")
 
 
         self.logwandb(logs, self.state.global_step)
@@ -434,7 +434,7 @@ class CustomTrainer(Seq2SeqTrainer):
             group_gloo = dist.new_group(backend="gloo")
 
             self.model.eval()
-            gen_config = get_generation_config(self.myargs.load, self.infer_tokenizer, True)
+            gen_config = get_generation_config(self.myargs.load, self.infer_tokenizer, True, dataset=self.myargs.task)
             test_loader = DataLoader(eval_dataset, batch_size=self.myargs.eval_bsz, collate_fn=DynamicCollator(self.infer_tokenizer, prepare_target=False), sampler=DistributedSampler(eval_dataset, self.args.world_size, self.world_rank, shuffle=False))
             test_loader.sampler.set_epoch(0)
 
