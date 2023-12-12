@@ -65,7 +65,36 @@ Use the prompt template mentioned in the paper to collect the teacher's feedback
 If you find our paper or codes useful, please kindly cite:
 
 ```
-@misc{wang2023democratizing,
+@inproceedings{wang-etal-2023-democratizing,
+    title = "Democratizing Reasoning Ability: Tailored Learning from Large Language Model",
+    author = "Wang, Zhaoyang  and
+      Huang, Shaohan  and
+      Liu, Yuxuan  and
+      Wang, Jiahai  and
+      Song, Minghui  and
+      Zhang, Zihan  and
+      Huang, Haizhen  and
+      Wei, Furu  and
+      Deng, Weiwei  and
+      Sun, Feng  and
+      Zhang, Qi",
+    editor = "Bouamor, Houda  and
+      Pino, Juan  and
+      Bali, Kalika",
+    booktitle = "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing",
+    month = dec,
+    year = "2023",
+    address = "Singapore",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.emnlp-main.120",
+    pages = "1948--1966"
+}
+```
+
+or
+
+```
+@article{wang2023democratizing,
       title={Democratizing Reasoning Ability: Tailored Learning from Large Language Model}, 
       author={Zhaoyang Wang and Shaohan Huang and Yuxuan Liu and Jiahai Wang and Minghui Song and Zihan Zhang and Haizhen Huang and Furu Wei and Weiwei Deng and Feng Sun and Qi Zhang},
       year={2023},
@@ -74,4 +103,3 @@ If you find our paper or codes useful, please kindly cite:
       primaryClass={cs.CL}
 }
 ```
-
